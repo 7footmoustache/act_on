@@ -1,0 +1,31 @@
+table {
+	border:1px outset #7F7F7F; 
+	border-spacing:2px; 
+	padding:0
+}
+td {
+	border:1px inset #7F7F7F; 
+	padding:2px; 
+	min-width:1.66em
+}
+
+td:nth-child(4n+4) {  
+  color: red;
+}
+
+.transposed {
+	display:block; 
+	float:left; 
+	padding:0 1px;
+}
+.transposed tbody {
+	display:block
+}
+.transposed td {
+	display:block; 
+	margin:2px 1px;
+}
+.transposed tr {
+	display:block; 
+	float:left; 
+}

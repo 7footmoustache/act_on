@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="stylesheet" href="cs/acton.css" />
+	</head>
+	<body>
+		<form name="tableForm">
+		    <label>Rows: <input type="text" name="rows" id="rows" min="1" max="100"></label>
+		    <button type="button">Create Table</button>  
+		</form>
+	    <div id="tableSection">
+			<table class="transposed">
+				<caption>Employee Information</caption>
+				<thead>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+	<!-- jQuery include -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+    <!-- SAL: Normally I would have a .js include with the following code, but including here to keep code together. -->
+    <script> 
+    /*=============JSON Manipulation====================*/
+    /*The JSON collection needs to be double quoted when fed to the employees variable*/       
+        var employees = '[{"firstName":"First1","lastName":"Last1","age":"Age1"},{"firstName":"First2","lastName":"Last2","age":"Age2"},{"firstName":"First3","lastName":"Last3","age":"Age3"},{"firstName":"First4","lastName":"Last4","age":"Age4"},{"firstName":"Linus","lastName":"Brown","age":"5"},{"firstName":"First6","lastName":"Last6","age":"Age6"},{"firstName":"Jason","lastName":"Mills","age":"44"},{"firstName":"First8","lastName":"Last8","age":"Age8"},{"firstName":"First9","lastName":"Last9","age":"Age9"},{"firstName":"First10","lastName":"Last10","age":"Age10"},{"firstName":"First11","lastName":"Last11","age":"Age11"},{"firstName":"Abby","lastName":"Mills","age":"35"},{"firstName":"First13","lastName":"Last13","age":"Age13"},{"firstName":"Snoopy","lastName":"Brown","age":"10"},{"firstName":"First15","lastName":"Last15","age":"Age15"},{"firstName":"First16","lastName":"Last16","age":"Age16"},{"firstName":"First17","lastName":"Last17","age":"Age17"},{"firstName":"First18","lastName":"Last18","age":"Age18"},{"firstName":"First19","lastName":"Last19","age":"Age19"}]';
+        
+        console.log('Here is the JSON Collection: ');
+        console.log(employees);
+
+        var employees_parsed = $.parseJSON(employees);
+        console.log('This is the parsed Employee collection: ');
+        console.log(employees_parsed);
+
+        /*SAL: This sorts by the last name:*/
+        var byLastNameDesc = employees_parsed.slice(0);
+        byLastNameDesc.sort(function(a,b) {
+            if (a.lastName == b.lastName){
+                var x = a.firstName.toLowerCase();
+                var y = b.firstName.toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            } else { 
+                var x = a.lastName.toLowerCase();
+                var y = b.lastName.toLowerCase();
+                return x > y ? -1 : x < y ? 1 : 0;
+            };
+        });
+        console.log('This is the sorted Employee collection: ');
+        console.log(byLastNameDesc);
+/*=============JSON manipulation Finished====================*/	
+			
+		$('button').click(function() {
+			var nRows = $('#rows').val();
+            var nCols = Math.ceil((byLastNameDesc.length)/nRows);
+            if (nRows < 1 || nRows > 100) {
+                alert("Please Enter a number of Rows between 1 and 100");
+            } else {
+            	for (var u = 0; u < byLastNameDesc.length; u++){
+            		var employee = byLastNameDesc[u];
+            	/*IN HERE having problems*/
+            		if (u % nRows === 0)
+            			{
+            				/*Something to add the close and open rows here*/
+							$('tbody').append($('<td>').html(employee.lastName+', '+employee.firstName));
+						} else {
+							$('tbody').append($('<td>').html(employee.lastName+', '+employee.firstName));
+						};
+				/*IN HERE*/
+				};
+			};
+		});	
+	</script>
+	</body>
+</html>
