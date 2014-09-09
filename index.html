@@ -16,7 +16,8 @@
 				<thead>
 				</thead>
 				<tbody>
-
+                    <tr>
+                    </tr>
 				</tbody>
 			</table>
 		</div>
@@ -58,17 +59,21 @@
             if (nRows < 1 || nRows > 100) {
                 alert("Please Enter a number of Rows between 1 and 100");
             } else {
-            	for (var u = 0; u < byLastNameDesc.length; u++){
+                var $trMain = $('tbody tr:first'),
+                    $childTbody;
+            	for (var u = 0; u < byLastNameDesc.length; u++) {
             		var employee = byLastNameDesc[u];
-            	/*IN HERE having problems*/
-            		if (u % nRows === 0)
-            			{
-            				/*Something to add the close and open rows here*/
-							$('tbody').append($('<td>').html(employee.lastName+', '+employee.firstName));
-						} else {
-							$('tbody').append($('<td>').html(employee.lastName+', '+employee.firstName));
-						};
-				/*IN HERE*/
+            		if (u % nRows === 0) {
+                        var $newTd = $('<td />');
+                        var $newTable = $('<table><tbody></tbody></table>');
+                        $newTd.append($newTable);
+                        $trMain.append($newTd);
+                        $childTbody = $newTable.find('tbody');
+                    }
+                    var $tr = $('<tr />');
+                    $tr.append($('<td>').text(employee.lastName));
+                    $tr.append($('<td>').text(employee.firstName));
+                    $childTbody.append($tr);
 				};
 			};
 		});	
